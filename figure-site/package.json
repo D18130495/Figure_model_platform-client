@@ -1,18 +1,19 @@
 {
-  "name": "{{ name }}",
+  "name": "figure-site",
   "version": "1.0.0",
-  "description": "{{ description }}",
-  "author": "{{ author }}",
+  "description": "Figure model platform client",
+  "author": "Yushun Zeng",
   "private": true,
   "scripts": {
     "dev": "nuxt",
     "build": "nuxt build",
-    "start": "nuxt start",
+    "start": "npm run dev",
     "generate": "nuxt generate",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
     "precommit": "npm run lint"
   },
   "dependencies": {
+    "element-ui": "^2.15.6",
     "nuxt": "^2.0.0"
   },
   "devDependencies": {
