@@ -35,7 +35,7 @@ module.exports = {
       }
     }
   },
-  Plugin: [
+  plugins: [
     { src: '~/plugins/element-ui.js', ssr: false}
   ]
 }
