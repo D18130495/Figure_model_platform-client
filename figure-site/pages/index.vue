@@ -63,7 +63,7 @@
         </div>
         
         <div class="v-scroll-list hospital-list">
-          <div v-for="(item, index) in list" :key="index" class="v-card clickable list-item">
+          <div v-for="(item, index) in list" :key="index" class="v-card clickable list-item" @click="show(item.companyCode)">
             <div class="">
               <div class="hospital-list-item hos-item" index="0">
                 <div class="wrapper">
@@ -265,6 +265,12 @@ export default {
         .catch(error => {
           console.log(error)
         })
+    },
+    handleSelect(item) {
+      window.location.href = '/company/' + item.companyCode
+    },
+    show(companyCode) {
+      window.location.href = '/company/' + companyCode
     }
   }
 }

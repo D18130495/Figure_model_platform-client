@@ -13,5 +13,17 @@ export default {
             url: `/admin/comp/company/findCompanyByName/${companyName}`,
             method: 'get'
         })
+    },
+    findCompanyByCompanyCode(companyCode) {
+        return request({
+            url: `/admin/comp/company/showCompanyDetailByCompanyCode/${companyCode}`,
+            method: 'get'
+        })
+    },
+    findSeriesByCompanyCode(companyCode) {
+        return request({
+            url: `/admin/comp/series/getSeries/${companyCode}`,
+            method: 'get'
+        })
     }
 }
