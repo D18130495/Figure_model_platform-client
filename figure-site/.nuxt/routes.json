@@ -1,5 +1,19 @@
 [
   {
+    "name": "company-detail-companyCode",
+    "path": "/company/detail/:companyCode?",
+    "component": "E:\\\\Figure_model_platform\\\\Figure_model_platform-client\\\\figure-site\\\\pages\\\\company\\\\detail\\\\_companyCode.vue",
+    "chunkName": "pages/company/detail/_companyCode",
+    "_name": "_5c766650"
+  },
+  {
+    "name": "company-notice-companyCode",
+    "path": "/company/notice/:companyCode?",
+    "component": "E:\\\\Figure_model_platform\\\\Figure_model_platform-client\\\\figure-site\\\\pages\\\\company\\\\notice\\\\_companyCode.vue",
+    "chunkName": "pages/company/notice/_companyCode",
+    "_name": "_71c9f117"
+  },
+  {
     "name": "company-companyCode",
     "path": "/company/:companyCode?",
     "component": "E:\\\\Figure_model_platform\\\\Figure_model_platform-client\\\\figure-site\\\\pages\\\\company\\\\_companyCode.vue",

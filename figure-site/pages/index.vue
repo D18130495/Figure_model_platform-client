@@ -33,7 +33,7 @@
           <div class="title">Company</div>
           <div>
             <div class="filter-wrapper">
-              <span style="padding-bottom: 5px;">Company type：</span>
+              <span style="padding-bottom: 5px;">Company type:</span>
               <div class="condition-wrapper">
                 <span 
                   class="item v-link clickable"
@@ -47,7 +47,7 @@
               </div>
             </div>
             <div class="filter-wrapper">
-              <span style="padding-bottom: 5px;">Country：</span>
+              <span style="padding-bottom: 5px;">Country:</span>
               <div class="condition-wrapper">
                <span 
                   class="item v-link clickable"

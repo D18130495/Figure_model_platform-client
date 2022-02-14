@@ -4,13 +4,19 @@
     <!-- left navigation bar -->
     <div class="nav left-nav">
       <div class="nav-item selected">
-        <span class="v-link selected dark">Company Overview</span>
+        <span class="v-link selected dark"
+        :onclick="'javascript:window.location=\'/company/' + company.companyCode + '\''"
+        >Company Overview</span>
       </div>
       <div class="nav-item">
-        <span class="v-link clickable dark">医院详情</span>
+        <span class="v-link clickable dark"
+        :onclick="'javascript:window.location=\'/company/detail/' + company.companyCode + '\''"
+        >Company detail</span>
       </div>
       <div class="nav-item">
-        <span class="v-link clickable dark">预约须知</span>
+        <span class="v-link clickable dark"
+        :onclick="'javascript:window.location=\'/company/notice/' + company.companyCode + '\''"
+        >Rule of order</span>
       </div>
       <div class="nav-item">
         <span class="v-link clickable dark">停诊信息</span>
@@ -145,7 +151,6 @@ export default {
         .then(respone => {
           this.company = respone.data.company
           this.orderRule = respone.data.bookingRule
-          console.log(this.company)
         })
         .catch(error => {
           console.log(error)
@@ -155,7 +160,6 @@ export default {
         companypApi.findSeriesByCompanyCode(this.companyCode)
           .then(respone => {
             this.series = respone.data
-            console.log(this.series)
           })
           .catch(error => {
               console.log(error)
