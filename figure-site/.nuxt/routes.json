@@ -3,28 +3,24 @@
     "name": "company-detail-companyCode",
     "path": "/company/detail/:companyCode?",
     "component": "E:\\\\Figure_model_platform\\\\Figure_model_platform-client\\\\figure-site\\\\pages\\\\company\\\\detail\\\\_companyCode.vue",
-    "chunkName": "pages/company/detail/_companyCode",
-    "_name": "_5c766650"
+    "chunkName": "pages/company/detail/_companyCode"
   },
   {
     "name": "company-notice-companyCode",
     "path": "/company/notice/:companyCode?",
     "component": "E:\\\\Figure_model_platform\\\\Figure_model_platform-client\\\\figure-site\\\\pages\\\\company\\\\notice\\\\_companyCode.vue",
-    "chunkName": "pages/company/notice/_companyCode",
-    "_name": "_71c9f117"
+    "chunkName": "pages/company/notice/_companyCode"
   },
   {
     "name": "company-companyCode",
     "path": "/company/:companyCode?",
     "component": "E:\\\\Figure_model_platform\\\\Figure_model_platform-client\\\\figure-site\\\\pages\\\\company\\\\_companyCode.vue",
-    "chunkName": "pages/company/_companyCode",
-    "_name": "_6c451e82"
+    "chunkName": "pages/company/_companyCode"
   },
   {
     "name": "index",
     "path": "/",
     "component": "E:\\\\Figure_model_platform\\\\Figure_model_platform-client\\\\figure-site\\\\pages\\\\index.vue",
-    "chunkName": "pages/index",
-    "_name": "_63eae309"
+    "chunkName": "pages/index"
   }
 ]

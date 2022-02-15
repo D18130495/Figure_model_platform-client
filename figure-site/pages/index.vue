@@ -1,8 +1,11 @@
 <template>
   <div class="home page-component">
     <el-carousel>
-      <el-carousel-item v-for="item in 2" :key="item">
-        <img src="~assets/images/web-banner1.png" alt="" />
+      <el-carousel-item>
+        <img src="~assets/images/banner.jpg" alt="banner" />
+      </el-carousel-item>
+      <el-carousel-item>
+        <img src="~assets/images/banner1.jpg" alt="banner1" />
       </el-carousel-item>
     </el-carousel>
     <!-- Search -->
@@ -184,7 +187,8 @@ export default {
     return companyApi.getPaginationCompanySet(0, 4, null)
       .then(respone => {
         return {
-          list: respone.data.content
+          list: respone.data.content,
+          imagesList: []
         }
       })
   },
