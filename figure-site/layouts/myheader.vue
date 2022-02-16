@@ -11,7 +11,7 @@
         />
         <span class="text">Figure pre-order platform</span>
       </div>
-      <!-- 搜索框 -->
+      <!-- search bar -->
       <div class="search-wrapper">
         <div class="hospital-search animation-show">
           <el-autocomplete
@@ -30,10 +30,9 @@
           </el-autocomplete>
         </div>
       </div>
-      <!-- 右侧 -->
+      <!-- right -->
       <div class="right-wrapper">
-        <span class="v-link clickable">帮助中心</span>
-        <span v-if="name == ''" class="v-link clickable" id="loginDialog" @click="dialogUserFormVisible = true">登录/注册</span>
+        <span v-if="name == ''" class="v-link clickable" id="loginDialog" @click="dialogUserFormVisible = true">Login/Join</span>
         <!-- <el-dropdown v-if="name != ''" @command="loginMenu">
           <span class="el-dropdown-link">
             {{ name }}<i class="el-icon-arrow-down el-icon--right"></i>
@@ -62,18 +61,14 @@
           <div class="wrapper" style="width: 100%">
             <div class="mobile-wrapper" style="position: static; width: 70%">
               <span class="title">{{ dialogAtrr.labelTips }}</span>
-              <el-form>
-                <el-form-item>
-                  <el-input v-model="dialogAtrr.inputValue" :placeholder="dialogAtrr.placeholder" :maxlength="dialogAtrr.maxlength" class="input v-input">
-                    <span slot="suffix" class="sendText v-link" v-if="dialogAtrr.second > 0"> 
-                      {{ dialogAtrr.second }}s
-                    </span>
-                    <span slot="suffix" class="sendText v-link highlight clickable selected" v-if="dialogAtrr.second == 0" @click="getCodeFun()">
-                      Send again
-                    </span>
-                  </el-input>
-                </el-form-item>
-              </el-form>
+                <el-input v-model="dialogAtrr.inputValue" :placeholder="dialogAtrr.placeholder" :maxlength="dialogAtrr.maxlength" @change="btnClick()" class="input v-input">
+                  <span slot="suffix" class="sendText v-link" v-if="dialogAtrr.second > 0"> 
+                    {{ dialogAtrr.second }}s
+                  </span>
+                  <span slot="suffix" class="sendText v-link highlight clickable selected" v-if="dialogAtrr.second == 0" @click="getCodeFun()">
+                    Send again
+                  </span>
+                </el-input>
               <div class="send-button v-button" @click="btnClick()">
                 {{ dialogAtrr.loginBtn }}
               </div>
@@ -87,7 +82,11 @@
   </div>
 </template>
 <script>
+import cookie from "js-cookie";
+
 import companyApi from '@/api/company'
+import msmApi from '@/api/msm'
+import userInfoApi from '@/api/userInfo'
 
 const defaultDialogAtrr = {
   showLoginType: 'phone',
@@ -107,7 +106,8 @@ export default {
       searchObj: {},
       name: '',
       dialogUserFormVisible: false,
-      dialogAtrr: defaultDialogAtrr
+      dialogAtrr: defaultDialogAtrr,
+      userInfo: {}
     }
   },
   created() {
@@ -142,6 +142,74 @@ export default {
       if (this.clearSmsTime) {
         clearInterval(this.clearSmsTime);
       }
+    },
+    getCodeFun() {
+       if (!/^0[34578]\d{8}$/.test(this.userInfo.phone)) {
+        this.$message.error("Format incorrect");
+        return;
+      }
+
+      this.dialogAtrr.inputValue = "";
+      this.dialogAtrr.placeholder = "Please input the code";
+      this.dialogAtrr.maxlength = 6;
+      this.dialogAtrr.loginBtn = "Login";
+
+      this.dialogAtrr.sending = false;
+      msmApi.sendCode(this.userInfo.phone)
+        .then(response => {
+          this.timeDown();
+        })
+        .catch(error => {
+          console.log(error)
+          this.showLogin();
+        });
+    },
+    timeDown() {
+      if (this.clearSmsTime) {
+        clearInterval(this.clearSmsTime);
+      }
+      this.dialogAtrr.second = 60;
+
+      this.dialogAtrr.labelTips = "Code sent to " + this.userInfo.phone;
+      this.clearSmsTime = setInterval(() => {
+        --this.dialogAtrr.second;
+        if (this.dialogAtrr.second < 1) {
+          clearInterval(this.clearSmsTime);
+          this.dialogAtrr.sending = true;
+          this.dialogAtrr.second = 0;
+        }
+      }, 1000);
+    },
+    login() {
+      this.userInfo.code = this.dialogAtrr.inputValue;
+
+      if (this.dialogAtrr.loginBtn == "Login...") {
+        this.$message.error("repeat submit");
+        return;
+      }
+      if (this.userInfo.code == "") {
+        this.$message.error("Please input the code");
+        return;
+      }
+      if (this.userInfo.code.length != 6) {
+        this.$message.error("Code format incorrect");
+        return;
+      }
+      this.dialogAtrr.loginBtn = "Login...";
+      userInfoApi.login(this.userInfo)
+        .then(response => {
+          console.log(response.data);
+          // set cookie
+          this.setCookies(response.data.name, response.data.token);
+        })
+        .catch(error => {
+          this.dialogAtrr.loginBtn = "Login now";
+        });
+    },
+    setCookies(name, token) {
+      cookie.set("token", token, { domain: "localhost" });
+      cookie.set("name", name, { domain: "localhost" });
+      window.location.reload();
     }
   }
 }
