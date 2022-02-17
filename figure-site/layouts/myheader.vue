@@ -33,7 +33,7 @@
       <!-- right -->
       <div class="right-wrapper">
         <span v-if="name == ''" class="v-link clickable" id="loginDialog" @click="dialogUserFormVisible = true">Login/Join</span>
-        <!-- <el-dropdown v-if="name != ''" @command="loginMenu">
+        <el-dropdown v-if="name != ''" @command="loginMenu">
           <span class="el-dropdown-link">
             {{ name }}<i class="el-icon-arrow-down el-icon--right"></i>
           </span>
@@ -41,9 +41,9 @@
             <el-dropdown-item command="/user">实名认证</el-dropdown-item>
             <el-dropdown-item command="/order">挂号订单</el-dropdown-item>
             <el-dropdown-item command="/patient">就诊人管理</el-dropdown-item>
-            <el-dropdown-item command="/logout" divided>退出登录</el-dropdown-item>
+            <el-dropdown-item command="/logout" divided>Logout</el-dropdown-item>
           </el-dropdown-menu>
-        </el-dropdown> -->
+        </el-dropdown>
       </div>
 
       <el-dialog
@@ -82,7 +82,8 @@
   </div>
 </template>
 <script>
-import cookie from "js-cookie";
+import cookie from 'js-cookie';
+import Vue from 'vue';
 
 import companyApi from '@/api/company'
 import msmApi from '@/api/msm'
@@ -111,6 +112,13 @@ export default {
     }
   },
   created() {
+    this.showInfo()
+  },
+  mounted() {
+    window.loginEvent = new Vue();
+    loginEvent.$on('loginDialogEvent', function() {
+      document.getElementById("loginDialog").click();
+    })
   },
   methods: {
     querySearchAsync(queryString, callback) {
@@ -210,6 +218,19 @@ export default {
       cookie.set("token", token, { domain: "localhost" });
       cookie.set("name", name, { domain: "localhost" });
       window.location.reload();
+    },
+    showInfo() {
+      let token = cookie.get("token")
+      if(token) {
+        this.name = cookie.get("name")
+      }
+    },
+    loginMenu(command) {
+      if(command === "/logout") {
+        cookie.set("token", '', { domain: "localhost" });
+        cookie.set("name", '', { domain: "localhost" });
+        window.location.reload();
+      }
     }
   }
 }
