@@ -33,7 +33,7 @@
       <!-- right -->
       <div class="right-wrapper">
         <span v-if="name == ''" class="v-link clickable" id="loginDialog" @click="dialogUserFormVisible = true">Login/Join</span>
-        <el-dropdown v-if="name != ''" @command="loginMenu">
+        <el-dropdown v-if="name != ''" trigger="click" @command="loginMenu">
           <span class="el-dropdown-link">
             {{ name }}<i class="el-icon-arrow-down el-icon--right"></i>
           </span>
@@ -230,6 +230,8 @@ export default {
         cookie.set("token", '', { domain: "localhost" });
         cookie.set("name", '', { domain: "localhost" });
         window.location.reload();
+      }else if(command === "/user") {
+        window.location.href = "/user"
       }
     }
   }

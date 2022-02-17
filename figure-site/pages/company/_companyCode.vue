@@ -32,6 +32,7 @@
       <div class="hospital-home">
         <div class="common-header">
           <div class="title-wrapper">
+            <el-button icon="el-icon-back" circle style="margin-right: 20px" :onclick="'javascript:window.location=\'/' + '\''"></el-button>
             <span class="hospital-title">{{ company.companyName }}</span>
           </div>
         </div>
@@ -109,9 +110,9 @@
                   v-for="it in item.children"
                   :key="it.id"
                   class="sub-item"
-                  @click="schedule(it.seriesCode)"
+                  @click="schedule(item.seriesCode)"
                 >
-                  <span class="v-link clickable">{{ it.seriesName }} </span>
+                  <span class="v-link clickable">{{ item.seriesName }} </span>
                 </div>
               </div>
             </div>
@@ -127,6 +128,8 @@
 <script>
 import "~/assets/css/hospital_personal.css";
 import "~/assets/css/hospital.css";
+
+import cookie from 'js-cookie'
 
 import companypApi from "@/api/company";
 
@@ -168,6 +171,14 @@ export default {
     move(index, seriesCode) {
         this.activeIndex = index
         document.getElementById(seriesCode).scrollIntoView()
+    },
+    schedule(seriesCode) {
+      let token = cookie.get('token')
+      if(!token) {
+        loginEvent.$emit('loginDialogEvent')
+        return;
+      }
+      // Window.location.href = ''
     }
   }
 };

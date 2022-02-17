@@ -1,5 +1,12 @@
 [
   {
+    "name": "user",
+    "path": "/user",
+    "component": "E:\\\\Figure_model_platform\\\\Figure_model_platform-client\\\\figure-site\\\\pages\\\\user\\\\index.vue",
+    "chunkName": "pages/user/index",
+    "_name": "_063628c4"
+  },
+  {
     "name": "company-detail-companyCode",
     "path": "/company/detail/:companyCode?",
     "component": "E:\\\\Figure_model_platform\\\\Figure_model_platform-client\\\\figure-site\\\\pages\\\\company\\\\detail\\\\_companyCode.vue",

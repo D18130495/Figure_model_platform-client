@@ -26,6 +26,7 @@
       <div class="hospital-detail">
         <div class="common-header">
           <div class="title-wrapper">
+            <el-button icon="el-icon-back" circle style="margin-right: 20px" :onclick="'javascript:window.location=\'/' + '\''"></el-button>
             <span class="hospital-title"></span>
             <div class="icon-wrapper">
               <span class="iconfont"></span>
