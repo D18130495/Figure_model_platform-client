@@ -1,13 +1,13 @@
 <template>
   <!-- header -->
   <div class="nav-container page-component">
-    <!--左侧导航 #start -->
+    <!-- left menu #start -->
     <div class="nav left-nav">
       <div class="nav-item selected">
         <span
           class="v-link selected dark"
           onclick="javascript:window.location='/user'"
-          >实名认证
+          >Certification
         </span>
       </div>
       <div class="nav-item">
@@ -33,11 +33,15 @@
         <span class="v-link clickable dark"> 意见反馈 </span>
       </div>
     </div>
-    <!-- 左侧导航 #end -->
-    <!-- 右侧内容 #start -->
+    <!-- left menu #end -->
+
+    <!-- right content #start -->
     <div class="page-container">
       <div>
-        <div class="title">实名认证</div>
+        <div class="title">
+          <el-button icon="el-icon-back" circle style="margin-right: 20px" :onclick="'javascript:window.location=\'/' + '\''"/>
+          Certification
+        </div>
         <div class="status-bar">
           <div class="status-wrapper">
             <span class="iconfont"></span>{{ userInfo.param.authStatusString }}
@@ -54,19 +58,19 @@
               label-width="110px"
               label-position="left"
             >
-              <el-form-item prop="name" label="姓名：" class="form-normal">
+              <el-form-item prop="name" label="Name: " class="form-normal">
                 <div class="name-input">
                   <el-input
                     v-model="userAuah.name"
-                    placeholder="请输入联系人姓名全称"
+                    placeholder="Please input the full name"
                     class="input v-input"
                   />
                 </div>
               </el-form-item>
-              <el-form-item prop="certificatesType" label="证件类型：">
+              <el-form-item prop="certificatesType" label="Certificates:">
                 <el-select
                   v-model="userAuah.certificatesType"
-                  placeholder="请选择证件类型"
+                  placeholder="Please select certificates Type"
                   class="v-select patient-select"
                 >
                   <el-option
@@ -78,40 +82,12 @@
                   </el-option>
                 </el-select>
               </el-form-item>
-              <el-form-item prop="certificatesNo" label="证件号码：">
+              <el-form-item prop="certificatesNo" label="Number:">
                 <el-input
                   v-model="userAuah.certificatesNo"
-                  placeholder="请输入联系人证件号码"
+                  placeholder="Please input certificates number"
                   class="input v-input"
                 />
-              </el-form-item>
-              <el-form-item prop="name" label="上传证件：">
-                <div class="upload-wrapper">
-                  <div class="avatar-uploader">
-                    <el-upload
-                      class="avatar-uploader"
-                      :action="fileUrl"
-                      :show-file-list="false"
-                      :on-success="onUploadSuccess"
-                    >
-                      <div class="upload-inner-wrapper">
-                        <img
-                          v-if="userAuah.certificatesUrl"
-                          :src="userAuah.certificatesUrl"
-                          class="avatar"
-                        />
-                        <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-                        <div v-if="!userAuah.certificatesUrl" class="text">
-                          上传证件合照
-                        </div>
-                      </div>
-                    </el-upload>
-                  </div>
-                  <img
-                    src="//img.114yygh.com/static/web/auth_example.png"
-                    class="example"
-                  />
-                </div>
               </el-form-item>
             </el-form>
             <div class="bottom-wrapper">
@@ -123,22 +99,25 @@
             </div>
           </div>
         </div>
+
+        <span v-if="userInfo.authStatus == 1" style="font-size: 20px; margin-left: 400px">Certification in process</span>
         <div class="context-container" v-if="userInfo.authStatus != 0">
           <div>
             <el-form
               :model="formData"
               label-width="110px"
               label-position="right"
+              style="padding-bottom: 20px"
             >
-              <el-form-item prop="name" label="姓名：" class="form-normal">
+              <el-form-item prop="name" label="Name: " class="form-normal">
                 <div class="name-input">
                   {{ userInfo.name }}
                 </div>
               </el-form-item>
-              <el-form-item prop="name" label="证件类型：">
+              <el-form-item prop="name" label="Certificates: ">
                 {{ userInfo.certificatesType }}
               </el-form-item>
-              <el-form-item prop="name" label="证件号码：">
+              <el-form-item prop="name" label="Number: ">
                 {{ userInfo.certificatesNo }}
               </el-form-item>
             </el-form>
@@ -146,8 +125,7 @@
         </div>
       </div>
     </div>
-    <!-- 右侧内容 #end -->
-    <!-- 登录弹出框 -->
+    <!-- right content #end -->
   </div>
   <!-- footer -->
 </template>
@@ -163,56 +141,57 @@ import userInfoApi from "@/api/userInfo";
 const defaultForm = {
   name: "",
   certificatesType: "",
-  certificatesNo: "",
-  certificatesUrl: "",
+  certificatesNo: ""
 };
+
 export default {
   data() {
     return {
       userAuah: defaultForm,
       certificatesTypeList: [],
-      fileUrl: "http://localhost/api/oss/file/fileUpload",
       userInfo: {
         param: {},
       },
-      submitBnt: "提交",
+      submitBnt: "Submit"
     };
   },
   created() {
-    this.init();
+    this.init()
   },
   methods: {
     init() {
-      this.getUserInfo();
-      this.getDict();
+      this.getUserInfo()
+      this.getDict()
     },
     getUserInfo() {
-      userInfoApi.getUserById().then((response) => {
-        this.userInfo = response.data;
+      userInfoApi.getUserById()
+        .then(response => {
+        this.userInfo = response.data
       });
     },
     saveUserAuah() {
-      if (this.submitBnt == "正在提交...") {
-        this.$message.info("重复提交");
+      if (this.submitBnt == "Uploading...") {
+        this.$message.info("Repeat submit")
         return;
       }
-      this.submitBnt = "正在提交...";
-      userInfoApi
-        .saveUserAuth(this.userAuah)
-        .then((response) => {
-          this.$message.success("提交成功");
-          window.location.reload();
+      this.submitBnt = "Uploading...";
+      userInfoApi.saveUserAuth(this.userAuah)
+        .then(response => {
+          this.$message.success("Successfully uploaded")
+          window.location.reload()
         })
-        .catch((e) => {
-          this.submitBnt = "提交";
+        .catch(error => {
+          this.submitBnt = "Submit";
         });
     },
     getDict() {
-      dictApi.getDictListByDictCode("CertificatesType").then((response) => {
-        this.certificatesTypeList = response.data;
-      });
+      dictApi.getDictListByDictCode("Certificates Type")
+        .then(response => {
+        this.certificatesTypeList = response.data
+        console.log(this.certificatesTypeList)
+      })
     }
-  },
+  }
 };
 </script>
 

@@ -38,7 +38,7 @@
             {{ name }}<i class="el-icon-arrow-down el-icon--right"></i>
           </span>
           <el-dropdown-menu class="user-name-wrapper" slot="dropdown">
-            <el-dropdown-item command="/user">实名认证</el-dropdown-item>
+            <el-dropdown-item command="/user">Certification</el-dropdown-item>
             <el-dropdown-item command="/order">挂号订单</el-dropdown-item>
             <el-dropdown-item command="/patient">就诊人管理</el-dropdown-item>
             <el-dropdown-item command="/logout" divided>Logout</el-dropdown-item>

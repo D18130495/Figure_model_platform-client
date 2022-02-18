@@ -132,6 +132,7 @@ import "~/assets/css/hospital.css";
 import cookie from 'js-cookie'
 
 import companypApi from "@/api/company";
+import userInfoApi from "@/api/userInfo"
 
 export default {
   data() {
@@ -178,6 +179,18 @@ export default {
         loginEvent.$emit('loginDialogEvent')
         return;
       }
+
+      userInfoApi.getUserById()
+        .then(respone => {
+          let userStatus = respone.data.authStatus
+          if(!userStatus || userStatus !== 2) {
+            window.location.href = "/user"
+            return
+          }
+        })
+        .catch(error => {
+          console.log(error)
+        })
       // Window.location.href = ''
     }
   }
