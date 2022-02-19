@@ -7,23 +7,26 @@
         <span
           class="v-link selected dark"
           onclick="javascript:window.location='/user'"
-          >Certification
+        >
+          Certification
         </span>
       </div>
+
       <div class="nav-item">
         <span
-          class="v-link selected dark"
+          class="v-link clickable dark"
           onclick="javascript:window.location='/order'"
         >
           挂号订单
         </span>
       </div>
+
       <div class="nav-item">
         <span
           class="v-link clickable dark"
-          onclick="javascript:window.location='/patient'"
+          onclick="javascript:window.location='/people'"
         >
-          就诊人管理
+          Delivery detail
         </span>
       </div>
       <div class="nav-item">
