@@ -3,42 +3,48 @@
     "name": "people",
     "path": "/people",
     "component": "E:\\\\Figure_model_platform\\\\Figure_model_platform-client\\\\figure-site\\\\pages\\\\people\\\\index.vue",
-    "chunkName": "pages/people/index",
-    "_name": "_65a6a69a"
+    "chunkName": "pages/people/index"
   },
   {
     "name": "user",
     "path": "/user",
     "component": "E:\\\\Figure_model_platform\\\\Figure_model_platform-client\\\\figure-site\\\\pages\\\\user\\\\index.vue",
-    "chunkName": "pages/user/index",
-    "_name": "_063628c4"
+    "chunkName": "pages/user/index"
+  },
+  {
+    "name": "people-add",
+    "path": "/people/add",
+    "component": "E:\\\\Figure_model_platform\\\\Figure_model_platform-client\\\\figure-site\\\\pages\\\\people\\\\add.vue",
+    "chunkName": "pages/people/add"
+  },
+  {
+    "name": "people-show",
+    "path": "/people/show",
+    "component": "E:\\\\Figure_model_platform\\\\Figure_model_platform-client\\\\figure-site\\\\pages\\\\people\\\\show.vue",
+    "chunkName": "pages/people/show"
   },
   {
     "name": "company-detail-companyCode",
     "path": "/company/detail/:companyCode?",
     "component": "E:\\\\Figure_model_platform\\\\Figure_model_platform-client\\\\figure-site\\\\pages\\\\company\\\\detail\\\\_companyCode.vue",
-    "chunkName": "pages/company/detail/_companyCode",
-    "_name": "_5c766650"
+    "chunkName": "pages/company/detail/_companyCode"
   },
   {
     "name": "company-notice-companyCode",
     "path": "/company/notice/:companyCode?",
     "component": "E:\\\\Figure_model_platform\\\\Figure_model_platform-client\\\\figure-site\\\\pages\\\\company\\\\notice\\\\_companyCode.vue",
-    "chunkName": "pages/company/notice/_companyCode",
-    "_name": "_71c9f117"
+    "chunkName": "pages/company/notice/_companyCode"
   },
   {
     "name": "company-companyCode",
     "path": "/company/:companyCode?",
     "component": "E:\\\\Figure_model_platform\\\\Figure_model_platform-client\\\\figure-site\\\\pages\\\\company\\\\_companyCode.vue",
-    "chunkName": "pages/company/_companyCode",
-    "_name": "_6c451e82"
+    "chunkName": "pages/company/_companyCode"
   },
   {
     "name": "index",
     "path": "/",
     "component": "E:\\\\Figure_model_platform\\\\Figure_model_platform-client\\\\figure-site\\\\pages\\\\index.vue",
-    "chunkName": "pages/index",
-    "_name": "_63eae309"
+    "chunkName": "pages/index"
   }
 ]
