@@ -196,22 +196,23 @@ export default {
     };
   },
   created() {
-    this.init();
+    this.init()
   },
   methods: {
     init() {
-      if (this.$route.query.id) {
-        const id = this.$route.query.id;
-        this.getPeopleById(id);
-      } else {
+      if(this.$route.query.id) {
+        const id = this.$route.query.id
+        this.getPeopleById(id)
+        this.submitBut = "Update"
+      }else {
         this.people = { ...defaultForm }
       }
       this.getDict()
     },
     getPeopleById(id) {
-      patientApi.getPeopleById(id)
+      peopleApi.getPeopleById(id)
         .then(response => {
-        this.people = response.data
+          this.people = response.data
         })
     },
     getDict() {
@@ -222,19 +223,19 @@ export default {
     },
     saveOrUpdate() {
       this.$refs.people.validate(valid => {
-        if (valid) {
-          if (!this.people.id) {
+        if(valid) {
+          if(!this.people.id) {
             this.saveData()
-          } else {
+          }else {
             this.updateData()
           }
         }
       });
     },
     saveData() {
-      if (this.submitBut == "Saving...") {
-        this.$message.info("Repear save")
-        return;
+      if(this.submitBut == "Saving...") {
+        this.$message.info("Repeat save")
+        return
       }
       this.submitBut = "Saving..."
       peopleApi.savePeople(this.people)
@@ -246,22 +247,21 @@ export default {
           this.submitBut = "Save"
         })
     },
-    // updateData() {
-    //   if (this.submitBnt == "正在提交...") {
-    //     this.$message.info("重复提交");
-    //     return;
-    //   }
-    //   this.submitBnt = "正在提交...";
-    //   patientApi
-    //     .updateById(this.patient)
-    //     .then((response) => {
-    //       this.$message.success("提交成功");
-    //       window.location.href = "/patient";
-    //     })
-    //     .catch((e) => {
-    //       this.submitBnt = "保存";
-    //     });
-    // }
+    updateData() {
+      if (this.submitBut == "Updating...") {
+        this.$message.info("Repeat update")
+        return
+      }
+      this.submitBut = "Updating..."
+      peopleApi.updatePeopleById(this.people)
+        .then(response => {
+          this.$message.success("Success")
+          window.location.href = "/people"
+        })
+        .catch(error => {
+          this.submitBut = "Update"
+        })
+    }
   }
 };
 </script>
