@@ -16,7 +16,7 @@
           class="v-link clickable dark"
           onclick="javascript:window.location='/order'"
         >
-          挂号订单
+          order
         </span>
       </div>
       <div class="nav-item selected">
