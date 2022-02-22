@@ -110,9 +110,9 @@
                   v-for="it in item.children"
                   :key="it.id"
                   class="sub-item"
-                  @click="schedule(item.seriesCode)"
+                  @click="schedule(it.seriesCode)"
                 >
-                  <span class="v-link clickable">{{ item.seriesName }} </span>
+                  <span class="v-link clickable">{{ it.seriesName }} </span>
                 </div>
               </div>
             </div>
@@ -191,7 +191,8 @@ export default {
         .catch(error => {
           console.log(error)
         })
-      // Window.location.href = ''
+        
+      window.location.href = '/company/schedule?companyCode=' + this.companyCode + '&seriesCode=' + seriesCode
     }
   }
 };
