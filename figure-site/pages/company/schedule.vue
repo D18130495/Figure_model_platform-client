@@ -65,9 +65,7 @@
                 <span class="week">{{ item.dayOfWeek }}</span>
               </div>
               <div class="status-wrapper" style="width: 165px" v-if="item.status == 0">
-                {{
-                  item.availableNumber == -1? "Unavailable" : item.availableNumber == 0? "Unavailable" : "Available"
-                }}
+                {{ item.availableNumber == -1? "Unavailable" : item.availableNumber == 0? "Sold out" : "Available" }}
               </div>
               <div class="status-wrapper" style="width: 165px" v-if="item.status == 1">Unavailable</div>
               <div class="status-wrapper" style="width: 165px" v-if="item.status == -1">Unavailable</div>
@@ -98,42 +96,35 @@
           </div>
         </div>
         <!-- 即将放号 #end-->
+
         <!-- pre-order list #end -->
-        <!-- morning order #start -->
+        <!-- order #start -->
         <div class="mt60" v-if="tabShow">
           <div class="">
             <div class="list-title">
               <div class="block"></div>
-              Morning
+              Available items
             </div>
-            <div
-              v-for="item in scheduleList" :key="item.id" v-if="item.orderTime == 0">
+            <div v-for="item in scheduleList" :key="item.id">
               <div class="list-item">
                 <div class="item-wrapper">
                   <div class="title-wrapper">
-                    <div class="title">{{ item.title }}</div>
-                    <div class="split"></div>
-                    <div class="name">{{ item.docname }}</div>
+                    <div class="name">{{ item.figureName }}</div>
                   </div>
-                  <div class="special-wrapper">{{ item.skill }}</div>
+                  <div class="special-wrapper">{{ item.desc }}</div>
                 </div>
                 <div class="right-wrapper">
-                  <div class="fee">￥{{ item.amount }}</div>
+                  <div class="fee">{{ item.preorderFee }}</div>
                   <div class="button-wrapper">
-                    <div
-                      class="v-button"
+                    <div class="v-button"
                       @click="booking(item.id, item.availableNumber)"
-                      :style="
-                        item.availableNumber == 0 || pageFirstStatus == -1
-                          ? 'background-color: #7f828b;'
-                          : ''
-                      "
+                      :style="item.availableNumber == 0 || pageFirstStatus == -1? 'background-color: #7f828b;' : ''"
                     >
-                      <span
-                        >剩余<span class="number">{{
-                          item.availableNumber
-                        }}</span></span
-                      >
+                      <span>Available 
+                          <span class="number">
+                            {{ item.availableNumber}}
+                          </span>
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -141,56 +132,10 @@
             </div>
           </div>
         </div>
-        <!-- 上午号源 #end -->
-        <!-- 下午号源 #start -->
-        <div class="mt60" v-if="tabShow">
-          <div class="">
-            <div class="list-title">
-              <div class="block"></div>
-              下午号源
-            </div>
-            <div
-              v-for="item in scheduleList"
-              :key="item.id"
-              v-if="item.workTime == 1"
-            >
-              <div class="list-item">
-                <div class="item-wrapper">
-                  <div class="title-wrapper">
-                    <div class="title">{{ item.title }}</div>
-                    <div class="split"></div>
-                    <div class="name">{{ item.docname }}</div>
-                  </div>
-                  <div class="special-wrapper">{{ item.skill }}</div>
-                </div>
-                <div class="right-wrapper">
-                  <div class="fee">￥{{ item.amount }}</div>
-                  <div class="button-wrapper">
-                    <div
-                      class="v-button"
-                      @click="booking(item.id, item.availableNumber)"
-                      :style="
-                        item.availableNumber == 0 || pageFirstStatus == -1
-                          ? 'background-color: #7f828b;'
-                          : ''
-                      "
-                    >
-                      <span
-                        >剩余<span class="number">{{
-                          item.availableNumber
-                        }}</span></span
-                      >
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- 下午号源 #end -->
+        <!-- order #end -->
       </div>
     </div>
-    <!-- 右侧内容 #end -->
+    <!-- right content #end -->
     </div>
   <!-- footer -->
 </template>
@@ -202,20 +147,20 @@ import companyApi from "@/api/company";
 export default {
   data() {
     return {
-      hoscode: null,
-      depcode: null,
+      companyCode: null,
+      seriesCode: null,
       orderDate: null,
       bookingScheduleList: [],
       scheduleList: [],
       baseMap: {},
       nextWorkDate: null, // 下一页第一个日期
       preWorkDate: null, // 上一页第一个日期
-      tabShow: true, //挂号列表与即将挂号切换
+      tabShow: true,
       activeIndex: 0,
 
-      current: 1, // 当前页
-      limit: 6, // 每页个数
-      total: 1, // 总页码
+      current: 1,
+      limit: 6,
+      total: 1,
 
       timeString: null,
       time: "Today",
@@ -242,7 +187,6 @@ export default {
           this.bookingScheduleList = response.data.bookingScheduleList
           this.total = response.data.total
           console.log(response.data.bookingScheduleList)
-        // this.baseMap = response.data.baseMap;
 
           this.dealClass()
 
@@ -264,6 +208,7 @@ export default {
       companyApi.findFigureList(this.companyCode, this.seriesCode, this.orderDate)
         .then((response) => {
           this.scheduleList = response.data
+          console.log(response.data)
         })
     },
     selectDate(item, index) {
@@ -298,7 +243,7 @@ export default {
           this.bookingScheduleList[i].availableNumber == -1
             ? "gray space"
             : this.bookingScheduleList[i].availableNumber == 0
-            ? "gray"
+            ? "gray space"
             : "small small-space"
         curClass += i == this.activeIndex ? " selected" : ""
         this.bookingScheduleList[i].curClass = curClass
