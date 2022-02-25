@@ -227,7 +227,6 @@ export default {
   created() {
     this.companyCode = this.$route.query.companyCode
     this.seriesCode = this.$route.query.seriesCode
-    this.orderDate = this.getCurDate()
     this.getBookingScheduleRule()
   },
   methods: {
@@ -243,13 +242,14 @@ export default {
           this.bookingScheduleList = response.data.bookingScheduleList
           this.total = response.data.total
           console.log(response.data.bookingScheduleList)
-        //   this.baseMap = response.data.baseMap;
+        // this.baseMap = response.data.baseMap;
 
           this.dealClass()
 
           // after pagination, select one
           if (this.orderDate == null) {
             this.orderDate = this.bookingScheduleList[0].orderDate
+            this.bookingScheduleList[0].status == 1? this.tabShow = false : this.tabShow = true
           }
           //判断当天是否停止预约 status == -1 停止预约
           if (this.orderDate == this.getCurDate()) {
