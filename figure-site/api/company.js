@@ -26,7 +26,7 @@ export default {
             method: 'get'
         })
     },
-    getBookingScheduleRule(current, limit, companyCode, series) {
+    getBookingScheduleRule(current, limit, companyCode, seriesCode) {
         return request({
             url: `/admin/comp/schedule/auth/getScheduleRule/${current}/${limit}/${companyCode}/${seriesCode}`,
             method: 'get'

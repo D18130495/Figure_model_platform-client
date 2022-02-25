@@ -47,7 +47,7 @@
           <div>{{ baseMap.bigname }}</div>
         </div>
         <div class="title mt20">{{ baseMap.depname }}</div>
-        <!-- 号源列表 #start -->
+        <!-- order date #start -->
         <div class="mt60">
           <div class="title-wrapper">{{ baseMap.workDateString }}</div>
           <div class="calendar-list-wrapper">
@@ -55,35 +55,29 @@
             <!-- selected , index == activeIndex ? 'selected' : ''-->
             <div
               :class="'calendar-item ' + item.curClass"
-              style="width: 124px"
+              style="width: 200px"
               v-for="(item, index) in bookingScheduleList"
               :key="item.id"
               @click="selectDate(item, index)"
             >
-              <div class="date-wrapper">
-                <span>{{ item.workDate }}</span
-                ><span class="week">{{ item.dayOfWeek }}</span>
+              <div class="date-wrapper" style="width: 165px">
+                <span>{{ item.orderDate }}</span>
+                <span class="week">{{ item.dayOfWeek }}</span>
               </div>
-              <div class="status-wrapper" v-if="item.status == 0">
+              <div class="status-wrapper" style="width: 165px" v-if="item.status == 0">
                 {{
-                  item.availableNumber == -1
-                    ? "无号"
-                    : item.availableNumber == 0
-                    ? "约满"
-                    : "有号"
+                  item.availableNumber == -1? "Unavailable" : item.availableNumber == 0? "Unavailable" : "Available"
                 }}
               </div>
-              <div class="status-wrapper" v-if="item.status == 1">即将放号</div>
-              <div class="status-wrapper" v-if="item.status == -1">
-                停止挂号
-              </div>
+              <div class="status-wrapper" style="width: 165px" v-if="item.status == 1">Unavailable</div>
+              <div class="status-wrapper" style="width: 165px" v-if="item.status == -1">Unavailable</div>
             </div>
           </div>
-          <!-- 分页 -->
+          <!-- pagnation -->
           <el-pagination
             class="pagination"
             layout="prev, pager, next"
-            :current-page="page"
+            :current-page="current"
             :total="total"
             :page-size="limit"
             @current-change="getPage"
@@ -93,31 +87,27 @@
         <!-- 即将放号 #start-->
         <div class="countdown-wrapper mt60" v-if="!tabShow">
           <div class="countdonw-title">
-            {{ time
-            }}<span class="v-link selected">{{ baseMap.releaseTime }} </span
+            {{ time }}<span class="v-link selected">{{ baseMap.releaseTime }} </span
             >放号
           </div>
           <div class="countdown-text">
-            倒 计 时
+            count down
             <div>
               <span class="number">{{ timeString }}</span>
             </div>
           </div>
         </div>
         <!-- 即将放号 #end-->
-        <!-- 号源列表 #end -->
-        <!-- 上午号源 #start -->
+        <!-- pre-order list #end -->
+        <!-- morning order #start -->
         <div class="mt60" v-if="tabShow">
           <div class="">
             <div class="list-title">
               <div class="block"></div>
-              上午号源
+              Morning
             </div>
             <div
-              v-for="item in scheduleList"
-              :key="item.id"
-              v-if="item.workTime == 0"
-            >
+              v-for="item in scheduleList" :key="item.id" v-if="item.orderTime == 0">
               <div class="list-item">
                 <div class="item-wrapper">
                   <div class="title-wrapper">
@@ -214,7 +204,7 @@ export default {
     return {
       hoscode: null,
       depcode: null,
-      workDate: null,
+      orderDate: null,
       bookingScheduleList: [],
       scheduleList: [],
       baseMap: {},
@@ -223,122 +213,104 @@ export default {
       tabShow: true, //挂号列表与即将挂号切换
       activeIndex: 0,
 
-      page: 1, // 当前页
-      limit: 7, // 每页个数
+      current: 1, // 当前页
+      limit: 6, // 每页个数
       total: 1, // 总页码
 
       timeString: null,
-      time: "今天",
+      time: "Today",
       timer: null,
 
-      pageFirstStatus: 0, // 第一页第一条数据状态
+      pageFirstStatus: 0 // 第一页第一条数据状态
     };
   },
+  created() {
+    this.companyCode = this.$route.query.companyCode
+    this.seriesCode = this.$route.query.seriesCode
+    this.orderDate = this.getCurDate()
+    this.getBookingScheduleRule()
+  },
+  methods: {
+    getPage(current = 1) {
+      this.current = current
+      this.orderDate = null
+      this.activeIndex = 0
+      this.getBookingScheduleRule()
+    },
+    getBookingScheduleRule() {
+      companyApi.getBookingScheduleRule(this.current, this.limit, this.companyCode, this.seriesCode)
+        .then((response) => {
+          this.bookingScheduleList = response.data.bookingScheduleList
+          this.total = response.data.total
+          console.log(response.data.bookingScheduleList)
+        //   this.baseMap = response.data.baseMap;
 
-//   created() {
-//     this.hoscode = this.$route.query.hoscode;
-//     this.depcode = this.$route.query.depcode;
-//     this.workDate = this.getCurDate();
-//     this.getBookingScheduleRule();
-//   },
+          this.dealClass()
 
-//   methods: {
-//     getPage(page = 1) {
-//       this.page = page;
-//       this.workDate = null;
-//       this.activeIndex = 0;
+          // after pagination, select one
+          if (this.orderDate == null) {
+            this.orderDate = this.bookingScheduleList[0].orderDate
+          }
+          //判断当天是否停止预约 status == -1 停止预约
+          if (this.orderDate == this.getCurDate()) {
+            this.pageFirstStatus = this.bookingScheduleList[0].status
+          } else {
+            this.pageFirstStatus = 0
+          }
+          this.findScheduleList()
+        })
+    },
+    findScheduleList() {
+      companyApi.findFigureList(this.companyCode, this.seriesCode, this.orderDate)
+        .then((response) => {
+          this.scheduleList = response.data
+        })
+    },
+    selectDate(item, index) {
+      this.orderDate = item.orderDate
+      this.activeIndex = index
 
-//       this.getBookingScheduleRule();
-//     },
+      //清理定时
+    //   if (this.timer != null) clearInterval(this.timer)
 
-//     getBookingScheduleRule() {
-//       hospitalApi
-//         .getBookingScheduleRule(
-//           this.page,
-//           this.limit,
-//           this.hoscode,
-//           this.depcode
-//         )
-//         .then((response) => {
-//           this.bookingScheduleList = response.data.bookingScheduleList;
-//           this.total = response.data.total;
-//           this.baseMap = response.data.baseMap;
+      // 是否即将放号
+      if (item.status == 1) {
+        this.tabShow = false
+        // 放号时间
+        // let releaseTime = new Date(
+        //   this.getCurDate() + " " + this.baseMap.releaseTime
+        // ).getTime();
+        // let nowTime = new Date().getTime();
+        // this.countDown(releaseTime, nowTime);
 
-//           this.dealClass();
+        this.dealClass()
+        this.getBookingScheduleRule()
+      } else {
+        this.tabShow = true
 
-//           // 分页后workDate=null，默认选中第一个
-//           if (this.workDate == null) {
-//             this.workDate = this.bookingScheduleList[0].workDate;
-//           }
-//           //判断当天是否停止预约 status == -1 停止预约
-//           if (this.workDate == this.getCurDate()) {
-//             this.pageFirstStatus = this.bookingScheduleList[0].status;
-//           } else {
-//             this.pageFirstStatus = 0;
-//           }
-//           this.findScheduleList();
-//         });
-//     },
-
-//     findScheduleList() {
-//       hospitalApi
-//         .findScheduleList(this.hoscode, this.depcode, this.workDate)
-//         .then((response) => {
-//           this.scheduleList = response.data;
-//         });
-//     },
-
-//     selectDate(item, index) {
-//       this.workDate = item.workDate;
-//       this.activeIndex = index;
-
-//       //清理定时
-//       if (this.timer != null) clearInterval(this.timer);
-
-//       // 是否即将放号
-//       if (item.status == 1) {
-//         this.tabShow = false;
-//         // 放号时间
-//         let releaseTime = new Date(
-//           this.getCurDate() + " " + this.baseMap.releaseTime
-//         ).getTime();
-//         let nowTime = new Date().getTime();
-//         this.countDown(releaseTime, nowTime);
-
-//         this.dealClass();
-//       } else {
-//         this.tabShow = true;
-
-//         this.getBookingScheduleRule();
-//       }
-//     },
-
-//     dealClass() {
-//       //处理样式
-//       for (let i = 0; i < this.bookingScheduleList.length; i++) {
-//         // depNumber -1:无号 0：约满 >0：有号
-//         let curClass =
-//           this.bookingScheduleList[i].availableNumber == -1
-//             ? "gray space"
-//             : this.bookingScheduleList[i].availableNumber == 0
-//             ? "gray"
-//             : "small small-space";
-//         curClass += i == this.activeIndex ? " selected" : "";
-//         this.bookingScheduleList[i].curClass = curClass;
-//       }
-//     },
-
-//     getCurDate() {
-//       let datetime = new Date();
-//       let year = datetime.getFullYear();
-//       let month =
-//         datetime.getMonth() + 1 < 10
-//           ? "0" + (datetime.getMonth() + 1)
-//           : datetime.getMonth() + 1;
-//       let date =
-//         datetime.getDate() < 10 ? "0" + datetime.getDate() : datetime.getDate();
-//       return year + "-" + month + "-" + date;
-//     },
+        this.getBookingScheduleRule()
+      }
+    },
+    dealClass() {
+      for (let i = 0; i < this.bookingScheduleList.length; i++) {
+        // depNumber -1:无号 0：约满 >0：有号
+        let curClass =
+          this.bookingScheduleList[i].availableNumber == -1
+            ? "gray space"
+            : this.bookingScheduleList[i].availableNumber == 0
+            ? "gray"
+            : "small small-space"
+        curClass += i == this.activeIndex ? " selected" : ""
+        this.bookingScheduleList[i].curClass = curClass
+      }
+    },
+    getCurDate() {
+      let datetime = new Date()
+      let year = datetime.getFullYear()
+      let month = datetime.getMonth() + 1 < 10? "0" + (datetime.getMonth() + 1) : datetime.getMonth() + 1
+      let date = datetime.getDate() < 10 ? "0" + datetime.getDate() : datetime.getDate()
+      return year + "-" + month + "-" + date
+    },
 
 //     countDown(releaseTime, nowTime) {
 //       //计算倒计时时长
@@ -408,6 +380,6 @@ export default {
 //         window.location.href = "/hosp/booking?scheduleId=" + scheduleId;
 //       }
 //     },
-//   },
+  }
 };
 </script>
