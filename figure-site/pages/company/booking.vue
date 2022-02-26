@@ -44,7 +44,7 @@
           <div>
             <div class="sub-title">
               <div class="block"/>
-              select delivery address: 
+              select delivery address
             </div>
             <div class="patient-wrapper">
               <div>
@@ -91,7 +91,7 @@
 
             <div class="sub-title" v-if="peopleList.length > 0">
               <div class="block"/>
-              Detail:
+              Detail
             </div>
 
             <el-card
@@ -123,66 +123,77 @@
 
             <div class="sub-title">
               <div class="block"/>
-              pre-order information:
+              pre-order information
             </div>
             <div class="content-wrapper">
               <el-form ref="form">
-                <el-form-item label="就诊日期：">
+                <el-form-item label="Figure name: ">
                   <div class="content">
-                    <span
-                      >{{ schedule.workDate }} {{ schedule.param.dayOfWeek }}
-                      {{ schedule.workTime == 0 ? "上午" : "下午" }}</span
-                    >
+                    <span>{{ schedule.figureName }} </span>
                   </div>
                 </el-form-item>
-                <el-form-item label="就诊医院：">
+                <el-form-item label="Figure description: ">
                   <div class="content">
-                    <span>{{ schedule.param.hosname }} </span>
+                    <span>{{ schedule.desc }} </span>
                   </div>
                 </el-form-item>
-                <el-form-item label="就诊科室：">
+                <el-form-item label="Pre-order time: ">
                   <div class="content">
-                    <span>{{ schedule.param.depname }} </span>
+                    <span>
+                      {{ schedule.orderDate }}
+                    </span>
                   </div>
                 </el-form-item>
-                <el-form-item label="医生姓名：">
+                <el-form-item label="Available Number: ">
                   <div class="content">
-                    <span>{{ schedule.docname }} </span>
+                    <span>{{ schedule.availableNumber }} </span>
                   </div>
                 </el-form-item>
-                <el-form-item label="医生职称：">
+                <el-form-item label="Reserved Number: ">
                   <div class="content">
-                    <span>{{ schedule.title }} </span>
+                    <span>{{ schedule.reservedNumber }} </span>
                   </div>
                 </el-form-item>
-                <el-form-item label="医生专长：">
+                <el-form-item label="Pre-order fee: ">
                   <div class="content">
-                    <span>{{ schedule.skill }}</span>
-                  </div>
-                </el-form-item>
-                <el-form-item label="医事服务费：">
-                  <div class="content">
-                    <div class="fee">{{ schedule.amount }}元</div>
+                    <span>{{ schedule.preorderFee }} </span>
                   </div>
                 </el-form-item>
               </el-form>
             </div>
 
-            <!-- 用户信息 #start-->
+            <!-- User information #start-->
             <div>
               <div class="sub-title">
                 <div class="block"></div>
-                用户信息
+                Delivery information
               </div>
               <div class="content-wrapper">
                 <el-form ref="form" :model="form">
-                  <el-form-item class="form-item" label="就诊人手机号：">
-                    {{ people.phone }}
+                  <el-form-item label="Receiver name: ">
+                    <div class="content">
+                      {{ people.name }}
+                    </div>
+                  </el-form-item>
+                  <el-form-item label="Delivery address: ">
+                    <div class="content">
+                      {{ people.address }}
+                    </div>
+                  </el-form-item>
+                  <el-form-item label="Receiver phone: ">
+                    <div class="content">
+                      {{ people.phone }}
+                    </div>
+                  </el-form-item>
+                  <el-form-item label="Receiver birthday: ">
+                    <div class="content">
+                      {{ people.birthdate }}
+                    </div>
                   </el-form-item>
                 </el-form>
               </div>
             </div>
-            <!-- 用户信息 #end -->
+            <!-- User information #end -->
             <div class="bottom-wrapper">
               <div class="button-wrapper">
                 <div class="v-button" @click="submitOrder()">
@@ -194,7 +205,7 @@
         </div>
       </div>
     </div>
-    <!-- 右侧内容 #end -->
+    <!-- right content #end -->
   </div>
   <!-- footer -->
 </template>
@@ -234,6 +245,7 @@ export default {
       companyApi.findscheduleByFigureScheduleId(this.scheduleId)
         .then(response => {
           this.schedule = response.data
+          console.log(this.schedule)
         })
     },
     findPatientList() {
