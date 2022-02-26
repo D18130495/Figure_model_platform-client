@@ -216,7 +216,7 @@ import "~/assets/css/hospital.css"
 
 import companyApi from "@/api/company"
 import peopleApi from "@/api/people"
-// import orderApi from "@/api/orderInfo" 
+import orderApi from "@/api/order" 
 
 export default {
   data() {
@@ -262,20 +262,22 @@ export default {
       this.activeIndex = index
       this.people = this.peopleList[index]
     },
-    //生成订单
     submitOrder() {
-        // 防止重复提交
-        if(this.submitBnt == '正在提交...') {
-        this.$message.error('不能重复提交')
-        return
+        if(this.submitBnt == 'Submitting...') {
+          this.$message.error('Can not repeat submit')
+          return
         }
-        this.submitBnt = '正在提交...'
-        orderApi.saveOrders(this.scheduleId, this.patient.id).then(response => {
-        let orderId = response.data
-        window.location.href = '/order/show?orderId=' + orderId
-        }).catch(e => {
-        this.submitBnt = '确认挂号'
-        })
+
+        this.submitBnt = 'Submitting...'
+
+        orderApi.saveOrders(this.scheduleId, this.people.id)
+          .then(response => {
+            let orderId = response.data.id
+            window.location.href = '/order/show?orderId=' + orderId
+            console.log(orderId)
+          }).catch(error => {
+            this.submitBnt = 'Confirm order'
+          })
     },
     addPeople() {
       console.log('1')
