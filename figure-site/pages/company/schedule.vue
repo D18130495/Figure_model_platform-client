@@ -6,7 +6,7 @@
       <div class="nav-item selected">
         <span
           class="v-link selected dark"
-          :onclick="'javascript:window.location=\'/company/' + '1000_4' + '\''"
+          :onclick="'javascript:window.location=\'/company/' + companyCode + '\''"
         >
           Company Overview
         </span>
@@ -14,7 +14,7 @@
       <div class="nav-item">
         <span
           class="v-link clickable dark"
-          :onclick="'javascript:window.location=\'/company/detail/' + '1000_4' + '\''"
+          :onclick="'javascript:window.location=\'/company/detail/' + companyCode + '\''"
         >
           Company detail
         </span>
@@ -22,7 +22,7 @@
       <div class="nav-item">
         <span
           class="v-link clickable dark"
-          :onclick="'javascript:window.location=\'/company/notice/' + '1000_4' + '\''"
+          :onclick="'javascript:window.location=\'/company/notice/' + companyCode + '\''"
         >
           Rule of order
         </span>
@@ -82,7 +82,7 @@
           >
           </el-pagination>
         </div>
-        <!-- 即将放号 #start-->
+        <!-- release order #start-->
         <div class="countdown-wrapper mt60" v-if="!tabShow">
           <div class="countdonw-title">
             {{ time }}<span class="v-link selected">{{ baseMap.releaseTime }} </span
@@ -95,7 +95,7 @@
             </div>
           </div>
         </div>
-        <!-- 即将放号 #end-->
+        <!-- release order #end-->
 
         <!-- pre-order list #end -->
         <!-- order #start -->
@@ -153,8 +153,8 @@ export default {
       bookingScheduleList: [],
       scheduleList: [],
       baseMap: {},
-      nextWorkDate: null, // 下一页第一个日期
-      preWorkDate: null, // 上一页第一个日期
+      nextOrderDate: null,
+      preOrderDate: null,
       tabShow: true,
       activeIndex: 0,
 
@@ -256,7 +256,6 @@ export default {
       let date = datetime.getDate() < 10 ? "0" + datetime.getDate() : datetime.getDate()
       return year + "-" + month + "-" + date
     },
-
 //     countDown(releaseTime, nowTime) {
 //       //计算倒计时时长
 //       let secondes = 0;
@@ -317,14 +316,13 @@ export default {
 //       window.location.href = "/hosp/" + this.hoscode;
 //     },
 
-//     booking(scheduleId, availableNumber) {
-//       debugger;
-//       if (availableNumber == 0 || this.pageFirstStatus == -1) {
-//         this.$message.error("不能预约");
-//       } else {
-//         window.location.href = "/hosp/booking?scheduleId=" + scheduleId;
-//       }
-//     },
+    booking(scheduleId, availableNumber) {
+      if (availableNumber == 0 || this.pageFirstStatus == -1) {
+        this.$message.error("Can not pre-order")
+      } else {
+        window.location.href = "/company/booking?scheduleId=" + scheduleId
+      }
+    }
   }
 };
 </script>

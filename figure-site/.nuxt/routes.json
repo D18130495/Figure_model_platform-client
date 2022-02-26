@@ -3,54 +3,70 @@
     "name": "people",
     "path": "/people",
     "component": "E:\\\\Figure_model_platform\\\\Figure_model_platform-client\\\\figure-site\\\\pages\\\\people\\\\index.vue",
-    "chunkName": "pages/people/index"
+    "chunkName": "pages/people/index",
+    "_name": "_65a6a69a"
   },
   {
     "name": "user",
     "path": "/user",
     "component": "E:\\\\Figure_model_platform\\\\Figure_model_platform-client\\\\figure-site\\\\pages\\\\user\\\\index.vue",
-    "chunkName": "pages/user/index"
+    "chunkName": "pages/user/index",
+    "_name": "_063628c4"
+  },
+  {
+    "name": "company-booking",
+    "path": "/company/booking",
+    "component": "E:\\\\Figure_model_platform\\\\Figure_model_platform-client\\\\figure-site\\\\pages\\\\company\\\\booking.vue",
+    "chunkName": "pages/company/booking",
+    "_name": "_653150d6"
   },
   {
     "name": "company-schedule",
     "path": "/company/schedule",
     "component": "E:\\\\Figure_model_platform\\\\Figure_model_platform-client\\\\figure-site\\\\pages\\\\company\\\\schedule.vue",
-    "chunkName": "pages/company/schedule"
+    "chunkName": "pages/company/schedule",
+    "_name": "_936255ea"
   },
   {
     "name": "people-add",
     "path": "/people/add",
     "component": "E:\\\\Figure_model_platform\\\\Figure_model_platform-client\\\\figure-site\\\\pages\\\\people\\\\add.vue",
-    "chunkName": "pages/people/add"
+    "chunkName": "pages/people/add",
+    "_name": "_dd747a2e"
   },
   {
     "name": "people-show",
     "path": "/people/show",
     "component": "E:\\\\Figure_model_platform\\\\Figure_model_platform-client\\\\figure-site\\\\pages\\\\people\\\\show.vue",
-    "chunkName": "pages/people/show"
+    "chunkName": "pages/people/show",
+    "_name": "_60ec0636"
   },
   {
     "name": "company-detail-companyCode",
     "path": "/company/detail/:companyCode?",
     "component": "E:\\\\Figure_model_platform\\\\Figure_model_platform-client\\\\figure-site\\\\pages\\\\company\\\\detail\\\\_companyCode.vue",
-    "chunkName": "pages/company/detail/_companyCode"
+    "chunkName": "pages/company/detail/_companyCode",
+    "_name": "_5c766650"
   },
   {
     "name": "company-notice-companyCode",
     "path": "/company/notice/:companyCode?",
     "component": "E:\\\\Figure_model_platform\\\\Figure_model_platform-client\\\\figure-site\\\\pages\\\\company\\\\notice\\\\_companyCode.vue",
-    "chunkName": "pages/company/notice/_companyCode"
+    "chunkName": "pages/company/notice/_companyCode",
+    "_name": "_71c9f117"
   },
   {
     "name": "company-companyCode",
     "path": "/company/:companyCode?",
     "component": "E:\\\\Figure_model_platform\\\\Figure_model_platform-client\\\\figure-site\\\\pages\\\\company\\\\_companyCode.vue",
-    "chunkName": "pages/company/_companyCode"
+    "chunkName": "pages/company/_companyCode",
+    "_name": "_6c451e82"
   },
   {
     "name": "index",
     "path": "/",
     "component": "E:\\\\Figure_model_platform\\\\Figure_model_platform-client\\\\figure-site\\\\pages\\\\index.vue",
-    "chunkName": "pages/index"
+    "chunkName": "pages/index",
+    "_name": "_63eae309"
   }
 ]
