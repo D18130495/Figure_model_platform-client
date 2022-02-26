@@ -28,6 +28,13 @@
     "_name": "_936255ea"
   },
   {
+    "name": "order-show",
+    "path": "/order/show",
+    "component": "E:\\\\Figure_model_platform\\\\Figure_model_platform-client\\\\figure-site\\\\pages\\\\order\\\\show.vue",
+    "chunkName": "pages/order/show",
+    "_name": "_44edc47c"
+  },
+  {
     "name": "people-add",
     "path": "/people/add",
     "component": "E:\\\\Figure_model_platform\\\\Figure_model_platform-client\\\\figure-site\\\\pages\\\\people\\\\add.vue",

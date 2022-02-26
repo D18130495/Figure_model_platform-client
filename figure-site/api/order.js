@@ -6,5 +6,11 @@ export default {
             url: `/api/order/orderInfo/auth/submitOrder/${scheduleId}/${peopleId}`,
             method: 'post'
         })
+    },
+    getOrderById(orderId) {
+        return request({
+            url: `/api/order/orderInfo/auth/getOrderById/${orderId}`,
+            method: 'get'
+        })
     }
 }

@@ -8,6 +8,7 @@ const _65a6a69a = () => interopDefault(import('..\\pages\\people\\index.vue' /* 
 const _063628c4 = () => interopDefault(import('..\\pages\\user\\index.vue' /* webpackChunkName: "pages/user/index" */))
 const _653150d6 = () => interopDefault(import('..\\pages\\company\\booking.vue' /* webpackChunkName: "pages/company/booking" */))
 const _936255ea = () => interopDefault(import('..\\pages\\company\\schedule.vue' /* webpackChunkName: "pages/company/schedule" */))
+const _44edc47c = () => interopDefault(import('..\\pages\\order\\show.vue' /* webpackChunkName: "pages/order/show" */))
 const _dd747a2e = () => interopDefault(import('..\\pages\\people\\add.vue' /* webpackChunkName: "pages/people/add" */))
 const _60ec0636 = () => interopDefault(import('..\\pages\\people\\show.vue' /* webpackChunkName: "pages/people/show" */))
 const _5c766650 = () => interopDefault(import('..\\pages\\company\\detail\\_companyCode.vue' /* webpackChunkName: "pages/company/detail/_companyCode" */))
@@ -42,6 +43,10 @@ export const routerOptions = {
     path: "/company/schedule",
     component: _936255ea,
     name: "company-schedule"
+  }, {
+    path: "/order/show",
+    component: _44edc47c,
+    name: "order-show"
   }, {
     path: "/people/add",
     component: _dd747a2e,
