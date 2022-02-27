@@ -18,5 +18,12 @@ export default {
             url: `/api/order/orderInfo/auth/deleteOrderById/${orderId}`,
             method: 'delete'
         })
+    },
+    getOrderList(current, limit, searchObj) {
+        return request({
+            url: `/api/order/orderInfo/auth/${current}/${limit}`,
+            method: 'get',
+            params: searchObj
+        })
     }
 }

@@ -1,5 +1,12 @@
 [
   {
+    "name": "order",
+    "path": "/order",
+    "component": "E:\\\\Figure_model_platform\\\\Figure_model_platform-client\\\\figure-site\\\\pages\\\\order\\\\index.vue",
+    "chunkName": "pages/order/index",
+    "_name": "_178ba15d"
+  },
+  {
     "name": "people",
     "path": "/people",
     "component": "E:\\\\Figure_model_platform\\\\Figure_model_platform-client\\\\figure-site\\\\pages\\\\people\\\\index.vue",
