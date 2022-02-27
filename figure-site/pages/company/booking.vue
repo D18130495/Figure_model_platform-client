@@ -269,12 +269,11 @@ export default {
         }
 
         this.submitBnt = 'Submitting...'
-
+        
         orderApi.saveOrders(this.scheduleId, this.people.id)
           .then(response => {
             let orderId = response.data.id
             window.location.href = '/order/show?orderId=' + orderId
-            console.log(orderId)
           }).catch(error => {
             this.submitBnt = 'Confirm order'
           })

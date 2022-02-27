@@ -12,5 +12,11 @@ export default {
             url: `/api/order/orderInfo/auth/getOrderById/${orderId}`,
             method: 'get'
         })
+    },
+    cancelOrder(orderId) {
+        return request({
+            url: `/api/order/orderInfo/auth/deleteOrderById/${orderId}`,
+            method: 'delete'
+        })
     }
 }

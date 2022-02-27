@@ -17,7 +17,7 @@
           class="v-link clickable dark"
           onclick="javascript:window.location='/order'"
         >
-          挂号订单
+          Order
         </span>
       </div>
 
@@ -33,7 +33,7 @@
         <span class="v-link clickable dark"> 修改账号信息 </span>
       </div>
       <div class="nav-item">
-        <span class="v-link clickable dark"> 意见反馈 </span>
+        <span class="v-link clickable dark">Suggestion</span>
       </div>
     </div>
     <!-- left menu #end -->
