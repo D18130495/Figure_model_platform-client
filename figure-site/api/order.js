@@ -19,6 +19,12 @@ export default {
             method: 'delete'
         })
     },
+    purchaseOrder(orderId) {
+        return request({
+            url: `/api/order/orderInfo/auth/placeOrderById/${orderId}`,
+            method: 'put'
+        })
+    },
     getOrderList(current, limit, searchObj) {
         return request({
             url: `/api/order/orderInfo/auth/${current}/${limit}`,

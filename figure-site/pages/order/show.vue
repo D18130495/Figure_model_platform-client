@@ -174,32 +174,25 @@ export default {
           this.orderInfo = response.data
         })
     },
-    queryPayStatus(orderId) {
-      weixinApi.queryPayStatus(orderId)
-        .then(response => {
-          if (response.message == "purchasing...") {
-            return
-          }
-          clearInterval(this.timer)
-          window.location.reload()
-      })
-    },
     pay() {
-      weixinApi.createNative(this.orderId)
-        .then(response => {
-          this.payObj = response.data
-        if (this.payObj.codeUrl == "") {
-          this.dialogPayVisible = false;
-          this.$message.error("支付错误")
-        } else {
-          this.timer = setInterval(() => {
-            this.queryPayStatus(this.orderId)
-          }, 3000)
-        }
+      this.$confirm("Are you sure to place this order?", "Inform", {
+        confirmButtonText: "Confirm",
+        cancelButtonText: "Cancel",
+        type: "success",
       })
+        .then(() => {
+          return orderApi.purchaseOrder(this.orderId)
+        })
+        .then(response => {
+          this.$message.success("Placed order")
+          window.location.href = '/order/show?orderId=' + this.orderId
+        })
+        .catch(() => {
+          this.$message.info("Order placed")
+        })
     },
     cancelOrder() {
-      this.$confirm("Are you sure to Cancel this order?", "Inform", {
+      this.$confirm("Are you sure to cancel this order?", "Inform", {
         confirmButtonText: "Confirm",
         cancelButtonText: "Cancel",
         type: "warning",
@@ -208,7 +201,7 @@ export default {
           return orderApi.cancelOrder(this.orderId)
         })
         .then(response => {
-          this.$message.success("Cancel order")
+          this.$message.success("Cancelled order")
           window.location.href = '/order/show?orderId=' + this.orderId
         })
         .catch(() => {
