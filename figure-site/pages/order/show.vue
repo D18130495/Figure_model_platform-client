@@ -131,7 +131,7 @@
           class="bottom-wrapper mt60"
           v-if="orderInfo.orderStatus == 0 || orderInfo.orderStatus == 1"
         >
-          <div class="button-wrapper">
+          <div class="button-wrapper" v-if="orderInfo.orderStatus != -1">
             <div class="v-button white" @click="cancelOrder()">Cancel order</div>
           </div>
           <div class="button-wrapper ml20" v-if="orderInfo.orderStatus == 0">
@@ -209,7 +209,7 @@ export default {
         })
         .then(response => {
           this.$message.success("Cancel order")
-          window.location.href = '/company/booking?scheduleId=' + this.orderInfo.scheduleId
+          window.location.href = '/order/show?orderId=' + this.orderId
         })
         .catch(() => {
           this.$message.info("Order canceled")

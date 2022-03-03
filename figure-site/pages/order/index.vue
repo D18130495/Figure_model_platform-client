@@ -75,14 +75,17 @@
             </el-table-column>
             <el-table-column prop="peopleName" label="Recipient" align="center">
             </el-table-column>
+            <el-table-column prop="param.figureName" label="Figure Name" align="center" width="250">
+            </el-table-column>
             <el-table-column prop="companyName" label="Comapny" align="center">
             </el-table-column>
             <el-table-column prop="seriesName" label="Series" align="center"> </el-table-column>
             <el-table-column prop="amount" label="Paid" align="center">
             </el-table-column>
-            <el-table-column label="Order status" align="center">
+            <el-table-column label="Order status" align="center" width="120">
               <template slot-scope="scope">
-                {{ scope.row.orderStatus == 0? "unpaid" : "paid" }}
+                {{ scope.row.orderStatus == 0? "Unpaid" : 
+                scope.row.orderStatus == 1? "Paid" : "Cancelled"}}
               </template>
             </el-table-column>
             <el-table-column label="Operation" align="center">
@@ -128,10 +131,10 @@ export default {
       list: [],
       total: 0,
       current: 1,
-      limit: 4,
+      limit: 5,
       searchObj: {},
       peopleList: [],
-      statusList: [],
+      statusList: []
     };
   },
   created() {
@@ -144,7 +147,6 @@ export default {
       this.current = current
       orderApi.getOrderList(this.current, this.limit, this.searchObj)
         .then((response) => {
-          console.log(this.searchObj)
           console.log(response.data)
           this.list = response.data.records
           this.total = response.data.total
@@ -153,7 +155,10 @@ export default {
     findPeopleList() {
       peopleApi.findPeopleList()
         .then((response) => {
-          this.peopleList = response.data
+          this.peopleList.push({"name":"", "certificatesNo":"All"})
+          for(var i = 0; i < response.data.length; i++) {
+            this.peopleList.push(response.data[i])
+          }
         })
     },
     show(id) {
