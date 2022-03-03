@@ -28,9 +28,6 @@
         </span>
       </div>
       <div class="nav-item">
-        <span class="v-link clickable dark"> 修改账号信息 </span>
-      </div>
-      <div class="nav-item">
         <span class="v-link clickable dark">Suggestion</span>
       </div>
     </div>
@@ -107,7 +104,7 @@
               <el-form-item label="Estimated arrival time: ">
                 <div class="content">
                   <span>
-                    {{ orderInfo.reserveDate }}
+                    {{ orderInfo.fetchTime }}
                     {{ orderInfo.reserveTime == 0 ? "AM" : "PM" }}
                   </span>
                 </div>

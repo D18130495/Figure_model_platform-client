@@ -30,9 +30,6 @@
         </span>
       </div>
       <div class="nav-item">
-        <span class="v-link clickable dark"> 修改账号信息 </span>
-      </div>
-      <div class="nav-item">
         <span class="v-link clickable dark">Suggestion</span>
       </div>
     </div>

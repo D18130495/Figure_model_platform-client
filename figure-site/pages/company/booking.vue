@@ -279,7 +279,6 @@ export default {
           })
     },
     addPeople() {
-      console.log('1')
       window.location.href = "/people/add"
     }
   }
