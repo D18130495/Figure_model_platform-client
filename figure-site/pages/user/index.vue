@@ -44,7 +44,8 @@
         </div>
         <div class="status-bar">
           <div class="status-wrapper">
-            <span class="iconfont"></span>{{ userInfo.param.authStatusString }}
+            <span class="iconfont"></span>
+            {{ userInfo.param.authStatus }}
           </div>
         </div>
         <div class="tips">
